@@ -188,10 +188,15 @@ void toggle_english_candidate()
 void switch_chiness_input()
 {
     if(demo_context.english_state != ENGLISH_STATE_NONE){
-        ToggleEnglishCandidate(&demo_context);
+        demo_context.english_state = ENGLISH_STATE_NONE;
     }
     ProcessContext(&demo_context);
 }
+void switch_english_input()
+{
+    demo_context.english_state = ENGLISH_STATE_INPUT;
+}
+
 void switch_english_cand()
 {
     if(demo_context.english_state != ENGLISH_STATE_CAND){
@@ -211,7 +216,6 @@ void get_config(LunispimConfig* config)
 {
     if(pim_config == 0) LoadDefaultConfig();
     config->hz_output_mode = pim_config->hz_output_mode;
-    config->english_state = demo_context.english_state;
     if(pim_config->hz_option & HZ_SYMBOL_CHINESE){
         config->symbol_type |= HZ_SYMBOL_CHINESE;
     }else{
@@ -228,12 +232,13 @@ void get_config(LunispimConfig* config)
     }
     config->user_data_dir = pim_config->user_data_dir;
     config->resources_data_dir = pim_config->resources_data_dir;
+    config->pinyin_mode = pim_config->pinyin_mode;
+    config->use_english_input = pim_config->use_english_input;
 }
 void update_config(LunispimConfig* config)
 {
     if(pim_config == 0) LoadDefaultConfig();
     pim_config->hz_output_mode = config->hz_output_mode;
-    demo_context.english_state = config->english_state;
     if(config->symbol_type & HZ_SYMBOL_CHINESE){
         pim_config->hz_option |= HZ_SYMBOL_CHINESE;
     }else{
@@ -250,6 +255,8 @@ void update_config(LunispimConfig* config)
     }
     strcpy_s(pim_config->user_data_dir, MAX_PATH, config->user_data_dir);
     strcpy_s(pim_config->resources_data_dir, MAX_PATH, config->resources_data_dir);
+    pim_config->pinyin_mode = config->pinyin_mode;
+    pim_config->use_english_input = config->use_english_input;
 
 }
 char* initialize()
@@ -284,6 +291,7 @@ LunispimApi* get_unispim_api()
         u_api.toggle_english_candidate = &toggle_english_candidate;
         u_api.switch_english_cand = &switch_english_cand;
         u_api.switch_chiness_input = &switch_chiness_input;
+        u_api.switch_english_input = &switch_english_input;
         u_api.set_soft_cursor = &set_soft_cursor;
         u_api.get_config = &get_config;
         u_api.update_config = &update_config;

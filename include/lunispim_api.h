@@ -26,6 +26,9 @@ extern "C" {
 #define	HZ_SYMBOL_CHINESE			(1 << 5)		//中文符号
 #define	HZ_SYMBOL_HALFSHAPE			(1 << 6)		//半角符号
 #define MAX_PATH 390
+//拼音方式
+#define	PINYIN_QUANPIN				0				//全拼
+#define	PINYIN_SHUANGPIN			1				//双拼
 typedef char16_t TCHAR;
 typedef struct lunispim_context_t {
     int candidate_count;
@@ -49,10 +52,11 @@ typedef struct lunispim_context_t {
 } LunispimContext;
 typedef struct lunispim_config_t {
     int hz_output_mode;
-    int english_state;
     int symbol_type;
     char* resources_data_dir;
     char* user_data_dir;
+    int pinyin_mode;
+    int use_english_input;
 } LunispimConfig;
 typedef struct lunispim_api_t {
     int data_size;
@@ -76,6 +80,7 @@ typedef struct lunispim_api_t {
     int (*get_symbol)(TCHAR ch, char *buffer, int buffer_size);
     void (*toggle_english_candidate)();
     void (*switch_chiness_input)();
+    void (*switch_english_input)();
     void (*switch_english_cand)();
     void (*set_soft_cursor)();
     int (*get_syllable_index)();

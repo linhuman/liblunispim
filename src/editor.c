@@ -1615,7 +1615,6 @@ int BackSelectedCandidate(PIMCONTEXT *context)
 }
 void MoveCursorRight(PIMCONTEXT *context)
 {
-    DEBUG_ECHO("context->cursor_pos:%d", context->cursor_pos);
     if (context->cursor_pos < context->input_length)
     {
 
@@ -1684,7 +1683,10 @@ void MoveCursorLeftBySyllable(PIMCONTEXT *context)
             TCHAR pinyin[0x10];
             int last_pos;
             int py_len;
-            py_len = GetSyllableString(context->syllables[i], pinyin, _SizeOf(pinyin), 0);
+            if(pim_config->pinyin_mode == PINYIN_SHUANGPIN)
+                py_len = GetSyllableStringSP(context->syllables[i], pinyin, _SizeOf(pinyin));
+            else
+                py_len = GetSyllableString(context->syllables[i], pinyin, _SizeOf(pinyin), 0);
             last_pos = pos;
             pos += py_len;
             if (context->input_string[pos] == SYLLABLE_SEPARATOR_CHAR)

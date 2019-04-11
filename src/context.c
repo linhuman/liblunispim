@@ -160,7 +160,7 @@ void ResetContext(PIMCONTEXT *context)
 		context->english_state = ENGLISH_STATE_NONE;
     */
 	if (!pim_config->use_english_input)
-		context->english_state = ENGLISH_STATE_NONE;
+        context->english_state = ENGLISH_STATE_NONE;
 }
 
 /**	第一次进行上下文的初始化
@@ -547,16 +547,12 @@ int ToggleEnglishCandidate(PIMCONTEXT *context)
 {
 	if (!context || !pim_config)
         return -1;
-#ifdef __DEBUG
-    DEBUG_ECHO("切换英文候选模式");
-#endif
 
 	if (ENGLISH_STATE_CAND == context->english_state)
 		context->english_state = ENGLISH_STATE_NONE;
 	else
 		context->english_state = ENGLISH_STATE_CAND;
     return context->english_state;
-	//PostMessage(context->ui_context->ui_window, UIM_ENGLISH_INPUT, 0, 0);
 }
 /*
 //设置候选显示模式
