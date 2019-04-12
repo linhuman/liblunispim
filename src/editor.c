@@ -281,7 +281,7 @@ void PostResult(PIMCONTEXT *context)
         if (context->selected_items[0].candidate.type == CAND_TYPE_ICW)
         {
             if (pim_config->save_icw && !(pim_config->hz_output_mode & HZ_OUTPUT_TRADITIONAL))
-            {U16_DEBUG_ECHO("context->result_string:%s", context->result_string);
+            {
                 //加入到词库以及Cache中
                 AddCi(context->result_syllables, context->result_syllable_count, (HZ*)context->result_string, context->result_syllable_count);
                 //准备删除词汇
@@ -301,9 +301,7 @@ void PostResult(PIMCONTEXT *context)
                                 context->selected_items[0].candidate.hz.word_item->ci_length,
                         context->selected_items[0].candidate.hz.word_item->syllable_length,
                         0);
-                U16_DEBUG_ECHO("context->result_string:%s", context->result_string);
             }else{
-                U16_DEBUG_ECHO("context->result_string:%s", context->result_string);
                 ProcessZiSelected(context->selected_items[0].candidate.hz.item);
             }
         }
@@ -313,7 +311,7 @@ void PostResult(PIMCONTEXT *context)
         {
             //非以词定字
             if (context->selected_items[0].left_or_right == ZFW_NONE)
-            {U16_DEBUG_ECHO("context->result_string:%s", context->result_string);
+            {
                 ProcessCiSelected(context->result_syllables,
                                   context->result_syllable_count,
                                   (HZ*)context->result_string,
@@ -662,7 +660,6 @@ int GetSelectedItemSyllable(SELECT_ITEM *item, SYLLABLE *syllables, int length)
  */
 int GetSelectedItemString(PIMCONTEXT *context, SELECT_ITEM *item, TCHAR *buffer, int length)
 {
-    DEBUG_ECHO("GetSelectedItemString");
     TCHAR ft_ci[0x100];
 
     if (length <= 1)
@@ -676,7 +673,6 @@ int GetSelectedItemString(PIMCONTEXT *context, SELECT_ITEM *item, TCHAR *buffer,
             if (!(pim_config->hz_output_mode & HZ_OUTPUT_TRADITIONAL))
             {
                 *(HZ*)buffer = item->candidate.word.hz[0];
-                U16_DEBUG_ECHO("item->candidate.word.hz[0]:%s", item->candidate.word.hz[0]);
                 *(buffer + 1) = 0;
             }
             else
@@ -696,7 +692,6 @@ int GetSelectedItemString(PIMCONTEXT *context, SELECT_ITEM *item, TCHAR *buffer,
             if (!(pim_config->hz_output_mode & HZ_OUTPUT_TRADITIONAL))
             {
                 *(HZ*)buffer = item->candidate.word.hz[item->candidate.word.item->ci_length - 1];
-                U16_DEBUG_ECHO("item->candidate.word.hz[0]:%s", item->candidate.word.hz[0]);
                 *(buffer + 1) = 0;
             }
             else
@@ -721,7 +716,6 @@ int GetSelectedItemString(PIMCONTEXT *context, SELECT_ITEM *item, TCHAR *buffer,
             if (!(pim_config->hz_output_mode & HZ_OUTPUT_TRADITIONAL))
             {
                 *(HZ*)buffer = item->candidate.icw.hz[0];
-                U16_DEBUG_ECHO("item->candidate.icw.hz[0]:%s", item->candidate.icw.hz[0]);
                 *(buffer + 1) = 0;
             }
             else
@@ -741,7 +735,6 @@ int GetSelectedItemString(PIMCONTEXT *context, SELECT_ITEM *item, TCHAR *buffer,
             if (!(pim_config->hz_output_mode & HZ_OUTPUT_TRADITIONAL))
             {
                 *(HZ*)buffer = item->candidate.icw.hz[item->candidate.icw.length - 1];
-                U16_DEBUG_ECHO("item->candidate.icw.hz[item->candidate.icw.length - 1]:%s", item->candidate.icw.hz[item->candidate.icw.length - 1]);
                 *(buffer + 1) = 0;
             }
             else

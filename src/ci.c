@@ -983,16 +983,13 @@ void InsertCiToCache(HZ *hz, int length, int syllable_length, int set_fix_top)
 
 	if (pos != -1)		//找到
 	{
-        DEBUG_ECHO("==================pos:%d", pos);
 		used_count = *(int*)&share_segment->ci_cache.cache[pos] >> 8;		//找出词的使用度
-        DEBUG_ECHO("==================used_count:%d", used_count);
 		used_count++;
 	}
 	else		//没有找到的话，当作插入到cache末尾处
 	{
 		used_count = 1;
 		pos = share_segment->ci_cache.length;
-        DEBUG_ECHO("==================pos:%d", pos);
 		share_segment->ci_cache.length	   = pos + item_length;
 		share_segment->ci_cache.cache[pos] = (char)length;
 

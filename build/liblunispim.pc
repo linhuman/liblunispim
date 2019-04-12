@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=/usr/bin
+libdir=/usr/lib64
+includedir=/usr/include
+
+Name: Liblunispim
+Description: Lunispim Input Method Core Library
+Version: 0.1
+Cflags: -I${includedir}
+Libs: -L${libdir} -llunispim

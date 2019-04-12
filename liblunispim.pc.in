@@ -1,0 +1,10 @@
+prefix=@PREFIX_DIR@
+exec_prefix=@BIN_INSTALL_DIR@
+libdir=@LIB_INSTALL_DIR@
+includedir=@INC_INSTALL_DIR@
+
+Name: Liblunispim
+Description: Lunispim Input Method Core Library
+Version: @LUNISPIM_VERSION@
+Cflags: -I${includedir}
+Libs: -L${libdir} -llunispim

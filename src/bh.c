@@ -42,7 +42,6 @@ int GetBHCandidates(const TCHAR *input_string, CANDIDATE *candidates, int array_
 
 	if (!bh_data)
 	{
-        DEBUG_ECHO("");
         bh_data = GetSharedMemory(bh_share_name);
         //bh_data = GetMappedFileAddress(bh_share_name);
 		//可能存在其他进程已经装载了，但是退出后共享内存被释放的问题
@@ -210,11 +209,6 @@ int LoadBHData(const char *file_name)
 
 	if (!file_length)
 		return 0;
-/*
-    DEBUG_ECHO("bh");
-    bh_data = MapFileReadOnly(bh_share_name);
-    if(!bh_data) return 0;
-    */
 	share_segment->bh_loaded = 1;
 
 	return 1;
@@ -227,9 +221,7 @@ int FreeBHData()
 
 	if (bh_data)
 	{
-        DEBUG_ECHO("");
         FreeSharedMemory(bh_share_name, bh_data);
-        //CloseMappedFile(bh_share_name);
 		bh_data = 0;
 	}
 

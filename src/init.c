@@ -32,6 +32,7 @@
 #define HZPY_DAT "hzpy.dat"
 #define J2F_DAT "j2f.dat"
 #define ERR_INFO_LENGTH 1024
+static int _loaded = 0;
 static char initialize_err_info[ERR_INFO_LENGTH] = {0};
 void DeployResources()
 {
@@ -60,7 +61,6 @@ void DeployResources()
         }
     }
     for(int i=0; i<arr_size; i++){
-        printf("data_dir[%d]:%s\n", i, data_dir[i]);
         for(int j=0; j<arr_size; j++){
             if(data_file[i][j] == 0) break;
             strcpy_s(des_path, MAX_PATH, pim_config->user_data_dir);
@@ -76,8 +76,6 @@ void DeployResources()
                 strcat_s(res_path, MAX_PATH, data_dir[i]);
                 strcat_s(res_path, MAX_PATH, data_file[i][j]);
                 res = CopyFile(res_path, des_path);
-                DEBUG_ECHO("res_path: %s", res_path);
-                DEBUG_ECHO("des_path: %s", des_path);
                 if(res == -1){
                     sprintf(initialize_err_info, "读取资源文件(%s)失败", res_path);
                     return;
@@ -101,7 +99,8 @@ void Initialize()
     PIM_LoadResources();
     PIM_ReloadINIResource();
     ResetContext(&demo_context);
-    ShowSharedMemoryList();
+    _loaded = 1;
+    //ShowSharedMemoryList();
 }
 char* GetInitializeErrorInfo()
 {
@@ -114,9 +113,9 @@ void __attribute__ ((constructor)) init()
 }
 void __attribute__ ((destructor)) finit()
 {
-    DEBUG_ECHO("finit");
-    //FreeWordLibraryResource();
-    //FreeSpwResource();
-    //FreeSharedSegment();
-    //FreeSharedMap();
+    if(_loaded){
+        PIM_FreeResources();
+        FreeSharedSegment();
+        FreeSharedMap();
+    }
 } 

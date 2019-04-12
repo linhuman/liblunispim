@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 include(FindPkgConfig)
-project (lunispim)
+project (liblunispim)
 add_compile_options(-Wno-write-strings)
 find_package(Boost 1.46.0 REQUIRED COMPONENTS filesystem system)
 if(Boost_FOUND)
@@ -21,15 +21,15 @@ set(INC_INSTALL_DIR "${PREFIX_DIR}/include")
 set(LIB_LUNISPIM "lunispim")
 set(LUNISPIM_VERSION 0.1)
 configure_file(
-	${PROJECT_SOURCE_DIR}/lunispim.pc.in
-	${PROJECT_BINARY_DIR}/lunispim.pc
+	${PROJECT_SOURCE_DIR}/liblunispim.pc.in
+	${PROJECT_BINARY_DIR}/liblunispim.pc
 	@ONLY)
 add_subdirectory(src)
 if(DEFINED DESTDIR)
-	install(FILES ${PROJECT_BINARY_DIR}/lunispim.pc DESTINATION ${DESTDIR}${LIB_INSTALL_DIR}/pkgconfig)
+	install(FILES ${PROJECT_BINARY_DIR}/liblunispim.pc DESTINATION ${DESTDIR}${LIB_INSTALL_DIR}/pkgconfig)
 	install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/lunispim DESTINATION ${DESTDIR}${DATA_INSTALL_DIR})
 else()
-	install(FILES ${PROJECT_BINARY_DIR}/lunispim.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
+	install(FILES ${PROJECT_BINARY_DIR}/liblunispim.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 	install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/lunispim DESTINATION ${DATA_INSTALL_DIR})
 endif()
 

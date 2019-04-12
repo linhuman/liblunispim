@@ -1,0 +1,13 @@
+/home/wen/github/liblunispim/build/CMakeFiles/install/strip.dir
+/home/wen/github/liblunispim/build/CMakeFiles/install.dir
+/home/wen/github/liblunispim/build/CMakeFiles/install/local.dir
+/home/wen/github/liblunispim/build/CMakeFiles/list_install_components.dir
+/home/wen/github/liblunispim/build/CMakeFiles/edit_cache.dir
+/home/wen/github/liblunispim/build/CMakeFiles/rebuild_cache.dir
+/home/wen/github/liblunispim/build/src/CMakeFiles/install/strip.dir
+/home/wen/github/liblunispim/build/src/CMakeFiles/edit_cache.dir
+/home/wen/github/liblunispim/build/src/CMakeFiles/lunispim.dir
+/home/wen/github/liblunispim/build/src/CMakeFiles/rebuild_cache.dir
+/home/wen/github/liblunispim/build/src/CMakeFiles/list_install_components.dir
+/home/wen/github/liblunispim/build/src/CMakeFiles/install/local.dir
+/home/wen/github/liblunispim/build/src/CMakeFiles/install.dir

@@ -262,7 +262,6 @@ int LoadSymbolResource()
 
     GetFileFullName(SYMBOL_INI_FILE_NAME, name);
 	return LoadSymbolData(name);
-    DEBUG_ECHO("LoadSymbolData");
 }
 
 /**	装载url data文件

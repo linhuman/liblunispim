@@ -456,10 +456,6 @@ int GetCandidates(PIMCONTEXT *context,
 		//后4种解析方式可能需要记录原始音节
 		ci_count_sav = count;
 
-        TCHAR candidate_hz2[MAX_SYLLABLE_PER_INPUT + 0x10] = {0};
-                GetCandidateString(context, &context->candidate_array[1], candidate_hz2, _SizeOf(candidate_hz2));
-                DEBUG_ECHO("context->cursor_pos:%d", context->cursor_pos);
-                U16_DEBUG_ECHO("candidate_hz2:%s", candidate_hz2);
 		//小音节拆分
 		small_arrays_count = GetSmallSyllablesParse(new_syllables, new_syllable_count, small_syllables_arrays, small_arrays_lengths);
 

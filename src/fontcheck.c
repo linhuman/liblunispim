@@ -55,12 +55,6 @@ int LoadFontMapData(const char *file_name)
 	if (!file_length)
 		return 0;
 
-    /*
-    DEBUG_ECHO("fontcheck");
-    fontmap = MapFileReadOnly(file_name);
-    if (!fontmap)
-        return 0;
-        */
 	share_segment->fontmap_loaded = 1;
 
 	return 1;

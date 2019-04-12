@@ -79,17 +79,12 @@ static int NewWordLibPage(int wordlib_id)
     new_length = sizeof(wordlib->header_data) +							//词库头
             wordlib->header.page_count * WORDLIB_PAGE_SIZE + 		//页数据长度
             WORDLIB_PAGE_SIZE;										//新页数据长度
-DEBUG_ECHO("new_length:%d", new_length);
-ShowSharedMemoryList();
-DEBUG_ECHO("length:%d", length);
     if (new_length > length)			//超出内存边界，无法分配
         return -1;
 
     //对页初始化
     new_page_no = wordlib->header.page_count;
-    DEBUG_ECHO("new_page_no:%d", new_page_no);
     wordlib->pages[new_page_no].next_page_no = PAGE_END;
-    DEBUG_ECHO("AAAAAAAAAAAA");
     wordlib->pages[new_page_no].data_length  = 0;
 
 
@@ -632,7 +627,6 @@ int LoadWordLibraryWithExtraLength(const char *lib_name, int extra_length, int c
 
         //内存中没有词库数据，需要进行装载
         length = GetFileLength(lib_name);				//获得词库的长度
-        DEBUG_ECHO("GetFileLength:%ld", length);
         if (length <= 0)									//文件不存在？
             break;
         //临时解决系统词库清零问题，固定系统词库内存为2M+1M，不足2M的直接申请2M，外挂1M作为扩展（不断的增加单词
@@ -653,7 +647,7 @@ int LoadWordLibraryWithExtraLength(const char *lib_name, int extra_length, int c
         {
             int len = (int)strlen(lib_name);
             if (strcmp(lib_name + len - 7, "sys.uwl"))
-                printf("!!!!!!!!!!系统词库正在被覆盖, 覆盖文件:%s\n", lib_name);
+                DEBUG_ECHO("!!!!!!!!!!系统词库正在被覆盖, 覆盖文件:%s\n", lib_name);
         }
         if (!LoadFromFile(lib_name, buffer, length))
         {	//装载失败
@@ -1646,9 +1640,12 @@ void SearchWordLib()
         return;
     }else{
         while(entry=readdir(dir)){
-            if(strcmp(entry->d_name, WORDLIB_SYS) &&
+            size_t file_name_length = strlen(entry->d_name);
+            size_t suffix_length = strlen(WORDLIB_SUFFIX);
+            if((file_name_length > suffix_length) &&
+                    strcmp(entry->d_name, WORDLIB_SYS) &&
                     strcmp(entry->d_name, WORDLIB_USER) &&
-                    strstr(entry->d_name, WORDLIB_SUFFIX) &&
+                    !strcmp(&entry->d_name[file_name_length - suffix_length], WORDLIB_SUFFIX) &&
                     pim_config->wordlib_count < MAX_WORDLIBS &&
                     entry->d_type == 8  //文件类型，4为文件夹
                     ){

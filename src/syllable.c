@@ -2968,6 +2968,5 @@ int GetSmallSyllables(SYLLABLE syllable, SYLLABLE *small_syllables)
 			return 1;
 		}
 	}
-DEBUG_ECHO("6");
 	return 0;
 }

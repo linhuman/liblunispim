@@ -61,13 +61,6 @@ int LoadEnglishData(const char *file_name)
 
 	if (!file_length)
 		return 0;
-
-    /*
-    DEBUG_ECHO("english");
-    eng_wordlib = MapFileReadOnly(english_share_name);
-    if (!eng_wordlib)
-        return 0;
-        */
 	share_segment->english_loaded = 1;
 
 	return 1;
@@ -215,12 +208,6 @@ int LoadEnglishTransData(const char *file_name)
 
 	if (!file_length)
 		return 0;
-    /*
-    DEBUG_ECHO("english");
-    eng_translib = MapFileReadOnly(engtrans_share_name);
-    if (!eng_translib)
-        return 0;
-        */
 	share_segment->engtrans_loaded = 1;
 
 	return 1;

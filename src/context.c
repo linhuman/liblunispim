@@ -202,9 +202,6 @@ void FirstTimeResetContext(PIMCONTEXT *context, int keyval)
  */
 void ToggleFullShape(PIMCONTEXT *context)
 {
-#ifdef __DEBUG__
-	printf("翻转全角、半角\n");
-#endif
 	pim_config->hz_option ^= HZ_SYMBOL_HALFSHAPE;
 	//SaveConfigInternal(pim_config);
 	context->modify_flag |= MODIFY_STATUS;

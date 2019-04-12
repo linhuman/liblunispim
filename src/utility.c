@@ -191,9 +191,7 @@ void FreeSharedMemory(const char *shared_name, void *pointer)
 			return;
 		}
         */
-    DEBUG_ECHO("CloseSharedMemory(shared_name): %s", shared_name);
     CloseSharedMemory(shared_name);
-    DEBUG_ECHO("CloseSharedMemory(shared_name): %d", CloseSharedMemory(shared_name));
 }
 
 /*	Ansi字符串转换到UTF16
@@ -427,7 +425,7 @@ int LoadFromFile(const char *file_name, void *buffer, int buffer_length)
 	fd = fopen(file_name, "rb");
 	if (!fd)
 	{
-        DEBUG_ECHO("文件打开失败: %s", strerror(errno));
+        DEBUG_ECHO("文件(%s)打开失败: %s", file_name, strerror(errno));
 		return 0;
 	}
 

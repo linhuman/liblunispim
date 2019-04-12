@@ -1469,8 +1469,6 @@ int FreeSharedSegment()
 {
 	if (share_segment)
 	{
-        //DEBUG_ECHO("GetSharedMemoryLength：segment_share_name: %d", GetSharedMemoryLength(segment_share_name));
-
         FreeSharedMemory(segment_share_name, share_segment);
         share_segment = 0;
 	}
