@@ -642,6 +642,7 @@ int LoadWordLibraryWithExtraLength(const char *lib_name, int extra_length, int c
             DEBUG_ECHO("分配内存失败");
             break;
         }
+
         //判断词库内容为何被加载了其他的内容
         if (empty_id == 1)		//系统词库
         {
