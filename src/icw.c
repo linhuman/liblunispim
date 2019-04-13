@@ -344,7 +344,7 @@ void NewEvaluateGroup(ICWITEMSET *icw_items, int group_no)
 			//items[i].value *= GetBigramValue(bigram_data, "△", ci0);
 
 	}
-
+    IconvClose(cd);
 
 }
 
