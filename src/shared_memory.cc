@@ -180,6 +180,7 @@ int CloseSharedMemory(const char* shared_name)
         _shared_map->erase(shared_name);
         return SUCCESS;
     }
+    return FAILED;
 }
 
 size_t GetSharedMemorySize(const char* shared_name)

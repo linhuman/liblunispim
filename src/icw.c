@@ -101,17 +101,19 @@ int LoadBigramData(const char *name)
 {
 	if (bigram_data)			//已经装载
 		return 1;
-    /*
+/*
 	bigram_handle = FileMapOpen(name);
 	if (!bigram_handle)
 		return 0;
 
 	if ((bigram_data_length = FileMapGetBuffer(bigram_handle, (char**)&bigram_data, 0)) < 0)
-		return 0;
-    */
-    bigram_data = CreateSharedMemoryReadOnly(name, SHARED_TYPE_MAP_FILE, 0);
-    if(!bigram_data) return 0;
-    bigram_data_length = GetSharedMemorySize(name);
+        return 0;
+*/
+    
+	bigram_data = CreateSharedMemoryReadOnly(name, SHARED_TYPE_MAP_FILE, 0);
+	if(!bigram_data) return 0;
+	bigram_data_length = GetSharedMemorySize(name);
+    
 	decode_word_list(GetGramWordList(bigram_data), bigram_data->header.word_list_size);
 
 	return 1;
@@ -353,13 +355,11 @@ void NewEvaluateGroup(ICWITEMSET *icw_items, int group_no)
 int NewGetIcwCandidates(SYLLABLE *syllable, int syllable_count, CANDIDATE *candidate, double *max_value)
 {
 	int i, index, part_syllable_count;
-//	ICWITEMSET icw_items;
 	ICWITEMSET *icw_items;					//为了避免堆栈越界的错误，必须采用在堆中分配的方式 2008-03-06.
 
 	NEWICWITEM	*icw_item;
 	HZ *icw_hz;
 	SYLLABLE *icw_syllable;
-	long long start, end;
 	//先赋初值，避免函数返回0时*max_value没有初始化
 	*max_value = -1.0;
 
@@ -434,6 +434,7 @@ int NewGetIcwCandidates(SYLLABLE *syllable, int syllable_count, CANDIDATE *candi
 	candidate->type = CAND_TYPE_ICW;
 
 	free(icw_items);
+
 	return 1;
 }
 

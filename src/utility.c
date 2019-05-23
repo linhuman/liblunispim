@@ -680,6 +680,7 @@ int code_convert(char *from_charset, char *to_charset, char *inbuf, size_t inlen
 	memset(outbuf, 0, outlen);
 
 	if ((result = iconv(cd, pin, &inlen, pout, &outlen)) == -1) {
+		iconv_close(cd);
 		return 0;
 	}
 	iconv_close(cd);

@@ -180,7 +180,9 @@ int GetSharedMemoryLength(const char *shared_name);
 #ifndef __arm__
 inline unsigned long long GetCycleCount()
 {
-   __asm ("RDTSC");
+    unsigned long long result;
+    __asm__ __volatile__ ("rdtsc" : "=A" (result));
+    return result;
 }
 #endif
 //16进制字符串转整数

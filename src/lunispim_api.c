@@ -84,6 +84,8 @@ void move_cursor_left()
     }
 
 }
+
+
 void move_cursor_right()
 {
     MoveCursorRight(&demo_context);
@@ -103,22 +105,27 @@ int get_candidate(int cand_id, char *cand_str, int len)
 int get_context(LunispimContext* context)
 {
     if(!context) return 0;
+    iconv_t cd;
+    cd = IconvOpen("UTF-16", "UTF-8");
     context->compose_length = demo_context.compose_length;
     context->candidate_count = demo_context.candidate_count;
     context->cursor_pos = demo_context.cursor_pos;
     context->compose_cursor_index = demo_context.compose_cursor_index;
     context->input_length = demo_context.input_length;
     context->candidate_selected_index = demo_context.candidate_selected_index;
-    Utf16ToUtf8(demo_context.input_string, context->input_string, MAX_INPUT_LENGTH + 0x10);
+    CodeConvert(cd, (char*)demo_context.input_string, sizeof(demo_context.input_string), context->input_string, sizeof(context->input_string));
+    //Utf16ToUtf8(demo_context.input_string, context->input_string, MAX_INPUT_LENGTH + 0x10);
     if(soft_cursor){
         char16_t temp[MAX_COMPOSE_LENGTH + 1] = {0};
         _tcsncat_s(temp, MAX_COMPOSE_LENGTH + 1, demo_context.compose_string, demo_context.compose_cursor_index);
         //_tcsncat_s(temp, MAX_COMPOSE_LENGTH + 1, u"›", 1);
         _tcsncat_s(temp, MAX_COMPOSE_LENGTH + 1, u"|", 1);
         _tcsncat_s(temp, MAX_COMPOSE_LENGTH + 1, &demo_context.compose_string[demo_context.compose_cursor_index], demo_context.compose_length);
-        Utf16ToUtf8(temp, context->compose_string, MAX_COMPOSE_LENGTH + 1);
+        CodeConvert(cd, (char*)temp, sizeof(temp), context->compose_string, sizeof(context->compose_string));
+        //Utf16ToUtf8(temp, context->compose_string, MAX_COMPOSE_LENGTH + 1);
     }else{
-        Utf16ToUtf8(demo_context.compose_string, context->compose_string, MAX_COMPOSE_LENGTH);
+        CodeConvert(cd, (char*)demo_context.compose_string, sizeof(demo_context.compose_string), context->compose_string, sizeof(context->compose_string));
+        //Utf16ToUtf8(demo_context.compose_string, context->compose_string, MAX_COMPOSE_LENGTH);
     }
     context->candidate_page_count = demo_context.candidate_page_count;
     context->candidate_index = demo_context.candidate_index;
@@ -128,13 +135,18 @@ int get_context(LunispimContext* context)
         context->is_last_page = 0;
     }
     context->selected_item_count = demo_context.selected_item_count;
-    Utf16ToUtf8(demo_context.selected_compose_string, context->selected_compose_string, MAX_COMPOSE_LENGTH);
-    Utf16ToUtf8(demo_context.spw_hint_string, context->spw_hint_string, MAX_SPW_HINT_STRING);
+    CodeConvert(cd, (char*)demo_context.selected_compose_string, sizeof(demo_context.selected_compose_string),
+                context->selected_compose_string, sizeof(context->selected_compose_string));
+    CodeConvert(cd, (char*)demo_context.spw_hint_string, sizeof(demo_context.spw_hint_string),
+                context->spw_hint_string, sizeof(context->spw_hint_string));
+    //Utf16ToUtf8(demo_context.selected_compose_string, context->selected_compose_string, MAX_COMPOSE_LENGTH);
+    //Utf16ToUtf8(demo_context.spw_hint_string, context->spw_hint_string, MAX_SPW_HINT_STRING);
     context->state = demo_context.state;
     context->english_state = demo_context.english_state;
     context->syllable_count = demo_context.syllable_count;
     context->syllable_index = GetSyllableIndexByComposeCursor(&demo_context, demo_context.compose_cursor_index);
     // Utf16ToUtf8(demo_context.selected_compose_string, context->selected_compose_string, MAX_COMPOSE_LENGTH);
+    IconvClose(cd);
     return 1;
 }
 
