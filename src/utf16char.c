@@ -376,7 +376,7 @@ int utf16_minfprintf(FILE *stream, char16_t *fmt, ...)
 	}
 	if (stream == stdout || stream == stderr) {
 		Utf16ToUtf8(buffer, u8_buf, 3072);
-		result = fprintf(stream, u8_buf);
+		result = fprintf("%s %s", stream, u8_buf);
 	} else {
 		result = fwrite(buffer, 2, utf16_strlen(buffer), stream);
 	}
